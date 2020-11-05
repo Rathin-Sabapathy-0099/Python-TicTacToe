@@ -30,13 +30,15 @@ def player_design():
 
 #Input Position function
 def position():
-    i=input("enter the position from (1-9)")
+    i=" "
+    while i not in ["1","2","3","4","5","6","7","8","9"]:
+        i=input("enter the position from (1-9) : ")
     i=int(i)
     if (len(a)==0):
         a.append(i)
         return i
     while i in a:
-        i=input("Entered position is already taken so select new position:")
+        i=input("Entered position is already taken so select new position : ")
         i=int(i)
         a.append(i)
         break
@@ -60,7 +62,7 @@ def move(player_number,position,board,design1,design2):
         board[position]=design2
     display_board(board)
 
-def play1(mark):
+def play(mark):
     return ((board[7] == mark and board[8] == mark and board[9] == mark) or # across the top
     (board[4] == mark and board[5] == mark and board[6] == mark) or # across the middle
     (board[1] == mark and board[2] == mark and board[3] == mark) or # across the bottom
@@ -69,22 +71,10 @@ def play1(mark):
     (board[9] == mark and board[6] == mark and board[3] == mark) or # down the right side
     (board[7] == mark and board[5] == mark and board[3] == mark) or # diagonal
     (board[9] == mark and board[5] == mark and board[1] == mark)) # diagonal
-
-
-def play2(mark):
-    return ((board[7] == mark and board[8] == mark and board[9] == mark) or # across the top
-    (board[4] == mark and board[5] == mark and board[6] == mark) or # across the middle
-    (board[1] == mark and board[2] == mark and board[3] == mark) or # across the bottom
-    (board[7] == mark and board[4] == mark and board[1] == mark) or # down the middle
-    (board[8] == mark and board[5] == mark and board[2] == mark) or # down the middle
-    (board[9] == mark and board[6] == mark and board[3] == mark) or # down the right side
-    (board[7] == mark and board[5] == mark and board[3] == mark) or # diagonal
-    (board[9] == mark and board[5] == mark and board[1] == mark)) # diagonal
-
 
 def result():
-    result1=play1(player1)
-    result2=play2(player2)
+    result1=play(player1)
+    result2=play(player2)
     if result1:
          print("Player1 Wins the match ")
          return 1
@@ -94,13 +84,28 @@ def result():
     elif(len(a)==9):
         print("Match Tie")
         return 1
-
 display_board(board)
 player1,player2=player_design()
-for i in range(0,9):
-               pos=position()
-               player=choose()
-               move(player,pos,board,player1,player2)
-               res=result()
-               if res:
-                   break
+def start():
+    for i in range(0,9):
+        pos=position()
+        player=choose()
+        move(player,pos,board,player1,player2)
+        res=result()
+        if res:
+            i
+            break
+            
+start()
+while (True):
+    i=""
+    while i not in ["Y","N"]:
+        i=input("Enter 'Y' to restart or 'N' exit : ").capitalize()
+    if (i=="Y"):
+        board=["#"," "," "," "," "," "," "," "," "," "]
+        a=[]
+        display_board(board)
+        player1,player2=player_design()
+        start()
+    else:
+        break
